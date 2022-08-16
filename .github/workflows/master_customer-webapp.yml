@@ -45,6 +45,9 @@ jobs:
         
       - name: Rename to ROOT
         run: mv *.war ROOT.war
+        
+      - name: List
+        run: ls
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
