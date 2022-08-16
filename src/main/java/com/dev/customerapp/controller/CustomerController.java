@@ -6,20 +6,21 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
 public class CustomerController {
 
     private final CustomerRepository customerRepository;
+
+    @GetMapping("/new")
+    public String showCustomerForm(Customer customer) {
+        return "add";
+    }
 
     @PostMapping("/add")
     public String getCustomers(@Valid Customer customer, BindingResult result){
@@ -35,17 +36,6 @@ public class CustomerController {
         List<Customer> allCustomers = customerRepository.findAll();
         model.addAttribute("customers", allCustomers.isEmpty() ? null : allCustomers);
         return "customers";
-    }
-
-    @GetMapping("/new")
-    public String showCustomerForm(Customer customer) {
-        return "add";
-    }
-
-    @GetMapping("/env")
-    @ResponseBody
-    public Map<String, String> getAllEnvs() {
-        return System.getenv();
     }
 
     @GetMapping("/edit/{id}")
