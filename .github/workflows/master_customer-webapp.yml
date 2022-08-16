@@ -23,9 +23,6 @@ jobs:
 
       - name: Build with Maven
         run: mvn clean install
-        
-      - name: List all
-        run: ls ${{ github.workspace }}/target/
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
@@ -45,6 +42,9 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: java-app
+        
+      - name: Rename to ROOT
+        run: mv *.war ROOT.war
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
